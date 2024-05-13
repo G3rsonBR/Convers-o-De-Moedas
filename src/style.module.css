@@ -1,0 +1,17 @@
+.money_table {
+  text-align: center;
+  width: 500px;
+  border-collapse: collapse;
+}
+
+.title {
+  text-align: center;
+  width: 90%;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+@media (max-width: 525px) {
+  .money_table {
+    width: 100%;
+  }
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Card from "./Components/Card";
-import "./App.css";
+import Row from "./Components/Row";
+import style from "./style.module.css";
 
 export default function App() {
   const [money, setMoney] = useState([]);
@@ -13,7 +13,13 @@ export default function App() {
         return res.json();
       })
       .then((data) => {
-        setMoney(Object.values(data));
+        const money = Object.values(data);
+        console.table(money)
+        money.forEach((el) => {
+          el.name = el.name.replace("/Real Brasileiro", "");
+          el.bid = parseFloat(el.bid).toFixed(2);
+        })
+        setMoney(money);
       });
   }
 
@@ -28,12 +34,17 @@ export default function App() {
 
   return (
     <>
-      <h1>Conversor de Moedas (Valores em BRL)</h1>
-      <div className="cards">
+      <h1 className={style.title}>Conversor de Moedas (Valores em BRL)</h1>
+      <table className={style.money_table}>
+        <tr>
+          <td><strong>Código</strong></td>
+          <td><strong>Moeda</strong></td>
+          <td><strong>Valor</strong></td>
+        </tr>
         {money.map((el, index) => {
-          return <Card key={index} props={el} />;
+          return <Row key={index} props={el} />;
         })}
-      </div>
+      </table>
     </>
   );
 }
